@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { useDispatch } from 'react-redux';
 import './index.css';
 // import { Provider } from 'react-redux';
 
 const App = () => {
+  const dispatch = useDispatch();
+
   return (
     <>
       <h1>Privet</h1>
