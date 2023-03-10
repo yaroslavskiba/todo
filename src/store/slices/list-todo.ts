@@ -1,16 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface ToDoState {
-  todos: string[];
-}
-
-const initialState: ToDoState[] = [];
+const initialState: string[][] = [];
 
 const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
-    addTodo: (state, action: PayloadAction<ToDoState>) => {
+    addTodo: (state, action: PayloadAction<string[]>) => {
       state.push(action.payload);
     },
   },
