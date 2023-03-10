@@ -1,20 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ToDoState {
-  todo: string[];
+  todos: string[];
 }
 
 const initialState: ToDoState[] = [];
 
-const listTodo = createSlice({
-  name: 'create-todo',
+const todoSlice = createSlice({
+  name: 'todo',
   initialState,
   reducers: {
-    addNewList(state, action: PayloadAction<string[]>) {
-      state.push({ todo: action.payload });
+    addTodo: (state, action: PayloadAction<ToDoState>) => {
+      state.push(action.payload);
     },
   },
 });
 
-export const { addNewList } = listTodo.actions;
-export default listTodo.reducer;
+export const { addTodo } = todoSlice.actions;
+export default todoSlice.reducer;
