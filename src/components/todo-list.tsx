@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch, useAppSelector } from '../store/store';
 import { editElementToDo, deleteElementToDo, deleteListToDo } from '../store/slices/list-todo';
+import { TfiSaveAlt } from 'react-icons/tfi';
+import { AiOutlineDeleteRow } from 'react-icons/ai';
+import { RiImageEditLine } from 'react-icons/ri';
+import { TiDocumentDelete } from 'react-icons/ti';
 
 const ToDoListItem = () => {
   const todos = useAppSelector((state) => state.listToDo);
@@ -50,24 +54,28 @@ const ToDoListItem = () => {
                 </>
               )}
               {editingIndex === itemIndex ? (
-                <button onClick={() => handleSaveEdit(listIndex, itemIndex)} key={`save-button-${itemIndex}`}>
-                  Сохранить
+                <button
+                  className="button-icon"
+                  onClick={() => handleSaveEdit(listIndex, itemIndex)}
+                  key={`save-button-${itemIndex}`}
+                >
+                  <TfiSaveAlt />
                 </button>
               ) : (
                 <>
                   <button
-                    className="button-icon delete-edit"
+                    className="button-icon"
                     onClick={() => handleDelete(listIndex, itemIndex)}
                     key={`delete-button-${itemIndex}`}
                   >
-                    Удалить
+                    <AiOutlineDeleteRow />
                   </button>
                   <button
-                    className="button-icon delete-edit"
+                    className="button-icon"
                     onClick={() => handleEdit(itemIndex)}
                     key={`edit-button-${itemIndex}`}
                   >
-                    Редактировать
+                    <RiImageEditLine />
                   </button>
                 </>
               )}
@@ -78,7 +86,7 @@ const ToDoListItem = () => {
             onClick={() => handleDeleteList(listIndex)}
             key={`delete-list-button-${listIndex}`}
           >
-            удалить список
+            <TiDocumentDelete />
           </button>
         </div>
       ))}

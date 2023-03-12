@@ -5,6 +5,7 @@ import store from './store/store';
 import ToDoList from './components/button-add-todo';
 import './index.css';
 import ToDoListItem from './components/todo-list';
+import { BiNote } from 'react-icons/bi';
 
 const App = () => {
   const [edit, setEdit] = useState(false);
@@ -12,13 +13,13 @@ const App = () => {
     setEdit(true);
   };
   return (
-    <>
-      <h1>ToDo App by Yaroslavskiba</h1>
+    <div className="wrapper">
+      <h1 className="title">ToDo App by Yaroslavskiba</h1>
       {!edit ? (
         <div className="todo-container">
           <div className="todo-add">
-            <button className="add-item" onClick={handleClickCreate}>
-              Добавить todo
+            <button className="button-icon create" onClick={handleClickCreate}>
+              <BiNote />
             </button>
           </div>
           <div className="todo-list">
@@ -28,7 +29,7 @@ const App = () => {
       ) : (
         <ToDoList setEdit={setEdit} />
       )}
-    </>
+    </div>
   );
 };
 

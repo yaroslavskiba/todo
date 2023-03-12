@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addTodo } from '../store/slices/list-todo';
 import { AppDispatch } from '../store/store';
+import { AiOutlineAppstoreAdd } from 'react-icons/ai';
+import { TfiSaveAlt } from 'react-icons/tfi';
 
 interface Props {
   setEdit: (value: boolean) => void;
@@ -33,11 +35,17 @@ const ToDoList = ({ setEdit }: Props) => {
   ));
 
   return (
-    <>
-      {inputs}
-      <button onClick={addInput}>добавить todo в список</button>
-      <button onClick={handleSaveButtonClick}>Сохранить</button>
-    </>
+    <div className="item-todo-list">
+      <div className="list-item">{inputs}</div>
+      <div className="control-buttons">
+        <button className="button-icon" onClick={addInput}>
+          <AiOutlineAppstoreAdd />
+        </button>
+        <button className="button-icon" onClick={handleSaveButtonClick}>
+          <TfiSaveAlt />
+        </button>
+      </div>
+    </div>
   );
 };
 
