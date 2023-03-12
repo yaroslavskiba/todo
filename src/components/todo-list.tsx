@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch, useAppSelector } from '../store/store';
-import { editToDo } from '../store/slices/list-todo';
+import { editElementToDo, deleteElementToDo, deleteListToDo } from '../store/slices/list-todo';
 
 const ToDoListItem = () => {
   const todos = useAppSelector((state) => state.listToDo);
@@ -15,7 +15,7 @@ const ToDoListItem = () => {
   };
 
   const handleSaveEdit = (listIndex: number, itemIndex: number) => {
-    dispatch(editToDo({ listIndex, itemIndex, stateEditToDO }));
+    dispatch(editElementToDo({ listIndex, itemIndex, stateEditToDO }));
     setEditingIndex(-1);
     setStateEditTodo('');
   };
@@ -25,30 +25,61 @@ const ToDoListItem = () => {
     setStateEditTodo(element);
   };
 
+  const handleDelete = (listIndex: number, itemIndex: number) => {
+    dispatch(deleteElementToDo({ listIndex, itemIndex }));
+  };
+
+  const handleDeleteList = (listIndex: number) => {
+    dispatch(deleteListToDo({ listIndex }));
+  };
+
   return (
     <>
       {todos.map((list, listIndex) => (
-        <div className="todo-group" key={listIndex}>
+        <div className="todo-group" key={`list-${listIndex}`}>
           {list.map((listItem, itemIndex) => (
-            <div className="todo-item" key={itemIndex}>
-              <input id={`${listIndex}-${itemIndex}`} type="checkbox" />
+            <div className="todo-item" key={`item-${listIndex}-${itemIndex}`}>
               {editingIndex === itemIndex ? (
-                <input type="text" onChange={handleChange} value={stateEditToDO} />
-              ) : (
-                <label htmlFor={`${listIndex}-${itemIndex}`}>{listItem}</label>
-              )}
-              {editingIndex === itemIndex ? (
-                <button onClick={() => handleSaveEdit(listIndex, itemIndex)}>Сохранить</button>
+                <input type="text" onChange={handleChange} value={stateEditToDO} key={`edit-input-${itemIndex}`} />
               ) : (
                 <>
-                  <button className="button-icon delete-edit">Удалить</button>
-                  <button className="button-icon delete-edit" onClick={() => handleEdit(itemIndex)}>
+                  <input id={`checkbox-${listIndex}-${itemIndex}`} type="checkbox" key={`checkbox-${itemIndex}`} />
+                  <label htmlFor={`checkbox-${listIndex}-${itemIndex}`} key={`label-${itemIndex}`}>
+                    {listItem}
+                  </label>
+                </>
+              )}
+              {editingIndex === itemIndex ? (
+                <button onClick={() => handleSaveEdit(listIndex, itemIndex)} key={`save-button-${itemIndex}`}>
+                  Сохранить
+                </button>
+              ) : (
+                <>
+                  <button
+                    className="button-icon delete-edit"
+                    onClick={() => handleDelete(listIndex, itemIndex)}
+                    key={`delete-button-${itemIndex}`}
+                  >
+                    Удалить
+                  </button>
+                  <button
+                    className="button-icon delete-edit"
+                    onClick={() => handleEdit(itemIndex)}
+                    key={`edit-button-${itemIndex}`}
+                  >
                     Редактировать
                   </button>
                 </>
               )}
             </div>
           ))}
+          <button
+            className="button-icon"
+            onClick={() => handleDeleteList(listIndex)}
+            key={`delete-list-button-${listIndex}`}
+          >
+            удалить список
+          </button>
         </div>
       ))}
     </>
