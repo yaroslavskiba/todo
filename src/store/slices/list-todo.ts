@@ -9,10 +9,9 @@ const todoSlice = createSlice({
     addTodo: (state, action: PayloadAction<string[]>) => {
       state.push(action.payload);
     },
-    editToDo: (state, action: PayloadAction<{ itemIndex: number; stateEdiToDO: string }>) => {
-      const { itemIndex, stateEdiToDO } = action.payload;
-      //TODO: Добавить индекс списка
-      state[itemIndex] = stateEdiToDO;
+    editToDo: (state, action: PayloadAction<{ listIndex: number; itemIndex: number; stateEditToDO: string }>) => {
+      const { listIndex, itemIndex, stateEditToDO } = action.payload;
+      state[listIndex][itemIndex] = stateEditToDO;
     },
   },
 });

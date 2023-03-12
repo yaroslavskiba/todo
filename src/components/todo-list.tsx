@@ -5,18 +5,18 @@ import { editToDo } from '../store/slices/list-todo';
 
 const ToDoListItem = () => {
   const todos = useAppSelector((state) => state.listToDo);
-  const [editThisToDO, setEditThisToDO] = useState(false);
-  const [stateEdiToDO, setStateEditTodo] = useState('');
+  const [editingIndex, setEditingIndex] = useState(-1);
+  const [stateEditToDO, setStateEditTodo] = useState('');
 
   const dispatch: AppDispatch = useDispatch();
 
-  const handleEdit = () => {
-    setEditThisToDO(!editThisToDO);
+  const handleEdit = (itemIndex: number) => {
+    setEditingIndex(itemIndex);
   };
 
-  const handleSaveEdit = (itemIndex: number) => {
-    handleEdit();
-    dispatch(editToDo({ itemIndex, stateEdiToDO }));
+  const handleSaveEdit = (listIndex: number, itemIndex: number) => {
+    dispatch(editToDo({ listIndex, itemIndex, stateEditToDO }));
+    setEditingIndex(-1);
     setStateEditTodo('');
   };
 
@@ -31,22 +31,21 @@ const ToDoListItem = () => {
         <div className="todo-group" key={listIndex}>
           {list.map((listItem, itemIndex) => (
             <div className="todo-item" key={itemIndex}>
-              {!editThisToDO ? (
-                <>
-                  <input id={`${listIndex}-${itemIndex}`} type="checkbox" />
-                  <label htmlFor={`${listIndex}-${itemIndex}`}>{listItem}</label>
-                </>
+              <input id={`${listIndex}-${itemIndex}`} type="checkbox" />
+              {editingIndex === itemIndex ? (
+                <input type="text" onChange={handleChange} value={stateEditToDO} />
               ) : (
-                <input type="text" onChange={handleChange} value={stateEdiToDO} />
+                <label htmlFor={`${listIndex}-${itemIndex}`}>{listItem}</label>
               )}
-              {!editThisToDO ? (
-                <>
-                  <button>Удалить</button>
-                  <button onClick={() => handleEdit()}>Редактировать</button>
-                </>
+              {editingIndex === itemIndex ? (
+                <button onClick={() => handleSaveEdit(listIndex, itemIndex)}>Сохранить</button>
               ) : (
-                //TODO: Добавить в вызов функции listIndex
-                <button onClick={() => handleSaveEdit(itemIndex)}>Сохранить</button>
+                <>
+                  <button className="button-icon delete-edit">Удалить</button>
+                  <button className="button-icon delete-edit" onClick={() => handleEdit(itemIndex)}>
+                    Редактировать
+                  </button>
+                </>
               )}
             </div>
           ))}
