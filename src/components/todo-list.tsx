@@ -41,6 +41,13 @@ const ToDoListItem = () => {
     <>
       {todos.map((list, listIndex) => (
         <div className="todo-group" key={`list-${listIndex}`}>
+          <button
+            className="button-icon right"
+            onClick={() => handleDeleteList(listIndex)}
+            key={`delete-list-button-${listIndex}`}
+          >
+            <TiDocumentDelete />
+          </button>
           {list.map((listItem, itemIndex) => (
             <div className="todo-item" key={`item-${listIndex}-${itemIndex}`}>
               {editingIndex === itemIndex ? (
@@ -62,14 +69,7 @@ const ToDoListItem = () => {
                   <TfiSaveAlt />
                 </button>
               ) : (
-                <>
-                  <button
-                    className="button-icon"
-                    onClick={() => handleDelete(listIndex, itemIndex)}
-                    key={`delete-button-${itemIndex}`}
-                  >
-                    <AiOutlineDeleteRow />
-                  </button>
+                <div className="control-buttons-container">
                   <button
                     className="button-icon"
                     onClick={() => handleEdit(itemIndex)}
@@ -77,17 +77,17 @@ const ToDoListItem = () => {
                   >
                     <RiImageEditLine />
                   </button>
-                </>
+                  <button
+                    className="button-icon"
+                    onClick={() => handleDelete(listIndex, itemIndex)}
+                    key={`delete-button-${itemIndex}`}
+                  >
+                    <AiOutlineDeleteRow />
+                  </button>
+                </div>
               )}
             </div>
           ))}
-          <button
-            className="button-icon"
-            onClick={() => handleDeleteList(listIndex)}
-            key={`delete-list-button-${listIndex}`}
-          >
-            <TiDocumentDelete />
-          </button>
         </div>
       ))}
     </>

@@ -31,7 +31,13 @@ const ToDoList = ({ setEdit }: Props) => {
   };
 
   const inputs = inputValues.map((value, i) => (
-    <input key={`input-${i}`} type="text" value={value} onChange={(e) => handleInputChange(i, e.target.value)} />
+    <input
+      key={`input-${i}`}
+      type="text"
+      value={value}
+      placeholder="here your todo"
+      onChange={(e) => handleInputChange(i, e.target.value)}
+    />
   ));
 
   return (
